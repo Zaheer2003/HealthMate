@@ -1,7 +1,7 @@
 
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:student_records_app/features/health_records/models/health_record.dart'; // Updated import
+import 'package:health_mate/features/health_records/models/health_record.dart'; // Updated import
 import 'i_database_service.dart';
 
 class SqfliteDatabaseService implements IDatabaseService {
@@ -49,15 +49,7 @@ class SqfliteDatabaseService implements IDatabaseService {
   @override
   Future<int> addHealthRecord(HealthRecord record) async {
     Database db = await _database!;
-    return await db.insert('health_records', {
-      'date': record.date.millisecondsSinceEpoch,
-      'steps': record.steps,
-      'calories': record.calories,
-      'water': record.water,
-      'goalSteps': record.goalSteps,
-      'goalCalories': record.goalCalories,
-      'goalWater': record.goalWater,
-    });
+    return await db.insert('health_records', record.toMap());
   }
 
   @override
@@ -65,31 +57,14 @@ class SqfliteDatabaseService implements IDatabaseService {
     Database db = await _database!;
     final List<Map<String, dynamic>> maps = await db.query('health_records');
     return List.generate(maps.length, (i) {
-      return HealthRecord(
-        id: maps[i]['id'],
-        date: DateTime.fromMillisecondsSinceEpoch(maps[i]['date']),
-        steps: maps[i]['steps'],
-        calories: maps[i]['calories'],
-        water: maps[i]['water'],
-        goalSteps: maps[i]['goalSteps'],
-        goalCalories: maps[i]['goalCalories'],
-        goalWater: maps[i]['goalWater'],
-      );
+      return HealthRecord.fromMap(maps[i]);
     });
   }
 
   @override
   Future<int> updateHealthRecord(HealthRecord record) async {
     Database db = await _database!;
-    return await db.update('health_records', {
-      'date': record.date.millisecondsSinceEpoch,
-      'steps': record.steps,
-      'calories': record.calories,
-      'water': record.water,
-      'goalSteps': record.goalSteps,
-      'goalCalories': record.goalCalories,
-      'goalWater': record.goalWater,
-    }, where: 'id = ?', whereArgs: [record.id]);
+    return await db.update('health_records', record.toMap(), where: 'id = ?', whereArgs: [record.id]);
   }
 
   @override

@@ -8,10 +8,10 @@ import 'settings_page.dart';
 import 'calories_history_page.dart';
 import 'water_history_page.dart';
 import 'step_history_page.dart';
-import 'package:student_records_app/features/auth/services/auth_service.dart';
-import 'package:student_records_app/features/auth/views/login_page.dart';
+import 'package:health_mate/features/auth/services/auth_service.dart';
+import 'package:health_mate/features/auth/views/login_page.dart';
 import 'package:provider/provider.dart';
-import 'package:student_records_app/services/theme_provider.dart';
+import 'package:health_mate/services/theme_provider.dart';
 
 class HomePage extends StatefulWidget {
   @override

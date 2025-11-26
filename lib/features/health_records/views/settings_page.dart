@@ -5,10 +5,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart'; // For date formatting
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:student_records_app/features/auth/services/auth_service.dart';
-import 'package:student_records_app/features/auth/views/login_page.dart';
-import 'package:student_records_app/services/theme_provider.dart';
-import '../controllers/health_record_controller.dart';
+import 'package:health_mate/features/auth/services/auth_service.dart';
+import 'package:health_mate/features/auth/views/login_page.dart';
+import 'package:health_mate/services/theme_provider.dart';
+import '../viewmodels/health_record_controller.dart';
 
 class SettingsPage extends StatefulWidget {
   @override

@@ -1,5 +1,5 @@
 
-import 'package:student_records_app/features/health_records/models/health_record.dart'; // Updated import
+import 'package:health_mate/features/health_records/models/health_record.dart'; // Updated import
 
 abstract class IDatabaseService {
   Future<void> init();

@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart'; // Import for ChangeNotifier
-import 'package:student_records_app/features/health_records/models/health_record.dart'; // Updated import
-import 'package:student_records_app/features/health_records/services/i_database_service.dart'; // Updated import
-import 'package:student_records_app/features/health_records/services/database_service_factory.dart'; // Updated import
+import 'package:health_mate/features/health_records/models/health_record.dart'; // Updated import
+import 'package:health_mate/features/health_records/services/i_database_service.dart'; // Updated import
+import 'package:health_mate/features/health_records/services/database_service_factory.dart'; // Updated import
 import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences
 
 class HealthRecordController extends ChangeNotifier {

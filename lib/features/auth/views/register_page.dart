@@ -2,10 +2,10 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:student_records_app/features/auth/services/auth_service.dart';
-import 'package:student_records_app/features/auth/widgets/auth_button.dart';
-import 'package:student_records_app/features/auth/widgets/auth_text_field.dart';
-import 'package:student_records_app/features/auth/widgets/fade_in_animation.dart';
+import 'package:health_mate/features/auth/services/auth_service.dart';
+import 'package:health_mate/features/auth/widgets/auth_button.dart';
+import 'package:health_mate/features/auth/widgets/auth_text_field.dart';
+import 'package:health_mate/features/auth/widgets/fade_in_animation.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

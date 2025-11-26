@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart'; // Import provider
-import 'package:student_records_app/features/auth/views/login_page.dart';
-import 'package:student_records_app/features/health_records/controllers/health_record_controller.dart';
-import 'package:student_records_app/services/theme_provider.dart';
+import 'package:health_mate/features/auth/views/login_page.dart';
+import 'package:health_mate/features/health_records/viewmodels/health_record_controller.dart';
+import 'package:health_mate/services/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

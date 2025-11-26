@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:student_records_app/features/health_records/controllers/health_record_controller.dart';
+import 'package:health_mate/features/health_records/viewmodels/health_record_controller.dart';
 import 'package:provider/provider.dart';
 import 'home_page.dart';
 

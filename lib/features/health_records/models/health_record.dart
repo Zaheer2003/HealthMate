@@ -1,25 +1,12 @@
 
-import 'package:hive/hive.dart';
-
-part 'health_record.g.dart';
-
-@HiveType(typeId: 1)
 class HealthRecord {
-  @HiveField(0)
   int? id;
-  @HiveField(1)
   DateTime date;
-  @HiveField(2)
   int steps;
-  @HiveField(3)
   int calories;
-  @HiveField(4)
   int water; // in ml
-  @HiveField(5)
   int? goalSteps; // Optional daily steps goal
-  @HiveField(6)
   int? goalCalories; // Optional daily calories goal
-  @HiveField(7)
   int? goalWater; // Optional daily water goal
 
   HealthRecord({
@@ -32,4 +19,30 @@ class HealthRecord {
     this.goalCalories,
     this.goalWater,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'date': date.toIso8601String(),
+      'steps': steps,
+      'calories': calories,
+      'water': water,
+      'goalSteps': goalSteps,
+      'goalCalories': goalCalories,
+      'goalWater': goalWater,
+    };
+  }
+
+  factory HealthRecord.fromMap(Map<String, dynamic> map) {
+    return HealthRecord(
+      id: map['id'],
+      date: DateTime.parse(map['date']),
+      steps: map['steps'],
+      calories: map['calories'],
+      water: map['water'],
+      goalSteps: map['goalSteps'],
+      goalCalories: map['goalCalories'],
+      goalWater: map['goalWater'],
+    );
+  }
 }

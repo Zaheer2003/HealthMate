@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../controllers/health_record_controller.dart';
+import '../viewmodels/health_record_controller.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:fl_chart/fl_chart.dart'; // Import fl_chart
-import 'package:student_records_app/features/auth/services/auth_service.dart';
-import 'package:student_records_app/features/health_records/views/step_history_page.dart';
-import 'package:student_records_app/features/health_records/views/calories_history_page.dart';
-import 'package:student_records_app/features/health_records/views/water_history_page.dart';
+import 'package:health_mate/features/auth/services/auth_service.dart';
+import 'package:health_mate/features/health_records/views/step_history_page.dart';
+import 'package:health_mate/features/health_records/views/calories_history_page.dart';
+import 'package:health_mate/features/health_records/views/water_history_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});

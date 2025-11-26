@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart'; // Import provider
-import '../controllers/health_record_controller.dart'; // Import HealthRecordController
+import '../viewmodels/health_record_controller.dart'; // Import HealthRecordController
 import '../models/health_record.dart'; // Import HealthRecord
 import 'package:intl/intl.dart'; // For date formatting
 

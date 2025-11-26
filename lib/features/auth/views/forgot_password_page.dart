@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:student_records_app/features/auth/services/auth_service.dart';
-import 'package:student_records_app/features/auth/widgets/auth_button.dart';
-import 'package:student_records_app/features/auth/widgets/auth_text_field.dart';
-import 'package:student_records_app/features/auth/views/login_page.dart';
+import 'package:health_mate/features/auth/services/auth_service.dart';
+import 'package:health_mate/features/auth/widgets/auth_button.dart';
+import 'package:health_mate/features/auth/widgets/auth_text_field.dart';
+import 'package:health_mate/features/auth/views/login_page.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
