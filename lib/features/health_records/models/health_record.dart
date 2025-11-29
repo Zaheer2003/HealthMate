@@ -20,6 +20,28 @@ class HealthRecord {
     this.goalWater,
   });
 
+  HealthRecord copyWith({
+    int? id,
+    DateTime? date,
+    int? steps,
+    int? calories,
+    int? water,
+    int? goalSteps,
+    int? goalCalories,
+    int? goalWater,
+  }) {
+    return HealthRecord(
+      id: id ?? this.id,
+      date: date ?? this.date,
+      steps: steps ?? this.steps,
+      calories: calories ?? this.calories,
+      water: water ?? this.water,
+      goalSteps: goalSteps ?? this.goalSteps,
+      goalCalories: goalCalories ?? this.goalCalories,
+      goalWater: goalWater ?? this.goalWater,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,

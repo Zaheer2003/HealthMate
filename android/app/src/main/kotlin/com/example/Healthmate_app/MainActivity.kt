@@ -1,4 +1,4 @@
-package com.example.student_records_app
+package com.example.Healthmate_app
 
 import io.flutter.embedding.android.FlutterActivity
 

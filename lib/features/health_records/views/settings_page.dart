@@ -453,7 +453,7 @@ class _SettingsPageState extends State<SettingsPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, color: color, size: 28),
-          SizedBox(height: 8),
+          SizedBox(height: 4),
           Text(
             label,
             style: TextStyle(
@@ -462,7 +462,7 @@ class _SettingsPageState extends State<SettingsPage> {
               color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
             ),
           ),
-          SizedBox(height: 6),
+          SizedBox(height: 4),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: TextFormField(
@@ -476,7 +476,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 filled: true,
                 fillColor: Colors.white.withOpacity(0.5),
-                contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+                contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
               ),
               style: TextStyle(
                 fontSize: 12,

@@ -6,7 +6,11 @@ import 'package:health_mate/services/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await HealthRecordController().init();
+  try {
+    await HealthRecordController().init();
+  } catch (e) {
+    print('Error initializing app: $e');
+  }
   runApp(
     MultiProvider(
       providers: [

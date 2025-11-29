@@ -1,3 +1,4 @@
+import 'package:health_mate/features/health_records/models/health_record.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodels/health_record_controller.dart';
@@ -20,6 +21,8 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
+  String _selectedFilter = 'Today';
+  final List<String> _filterOptions = ['Today', 'Yesterday', 'This Week'];
 
   @override
   void initState() {
@@ -44,17 +47,39 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
   Widget build(BuildContext context) {
     return Consumer<HealthRecordController>(
       builder: (context, controller, child) {
-        // Filter records for today
+        // Filter records based on the selected filter
         final today = DateTime.now();
-        final todayRecords = controller.healthRecords.where((record) {
-          return record.date.year == today.year &&
-                 record.date.month == today.month &&
-                 record.date.day == today.day;
-        }).toList();
+        final List<HealthRecord> filteredRecords;
 
-        final totalStepsToday = todayRecords.fold<int>(0, (sum, record) => sum + record.steps);
-        final totalCaloriesToday = todayRecords.fold<int>(0, (sum, record) => sum + record.calories);
-        final totalWaterToday = todayRecords.fold<int>(0, (sum, record) => sum + record.water);
+        switch (_selectedFilter) {
+          case 'Yesterday':
+            final yesterday = today.subtract(const Duration(days: 1));
+            filteredRecords = controller.healthRecords.where((record) {
+              return record.date.year == yesterday.year &&
+                     record.date.month == yesterday.month &&
+                     record.date.day == yesterday.day;
+            }).toList();
+            break;
+          case 'This Week':
+            final weekAgo = today.subtract(const Duration(days: 7));
+            filteredRecords = controller.healthRecords.where((record) {
+              return record.date.isAfter(weekAgo) && record.date.isBefore(today.add(const Duration(days: 1)));
+            }).toList();
+            break;
+          case 'Today':
+          default:
+            filteredRecords = controller.healthRecords.where((record) {
+              return record.date.year == today.year &&
+                     record.date.month == today.month &&
+                     record.date.day == today.day;
+            }).toList();
+            break;
+        }
+
+        final totalStepsToday = filteredRecords.fold<int>(0, (sum, record) => sum + (record as HealthRecord).steps);
+        final totalCaloriesToday = filteredRecords.fold<int>(0, (sum, record) => sum + (record as HealthRecord).calories);
+        final totalWaterToday = filteredRecords.fold<int>(0, (sum, record) => sum + (record as HealthRecord).water);
+
 
         // Get goals from controller
         final goalSteps = controller.defaultGoalSteps;
@@ -65,15 +90,24 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
         Map<String, int> dailySteps = {};
         Map<String, int> dailyCalories = {};
         Map<String, int> dailyWater = {};
-        for (int i = 6; i >= 0; i--) {
-          final date = today.subtract(Duration(days: i));
+
+        if (_selectedFilter == 'This Week') {
+          for (int i = 6; i >= 0; i--) {
+            final date = today.subtract(Duration(days: i));
+            final formattedDate = DateFormat('MM/dd').format(date);
+            dailySteps[formattedDate] = 0;
+            dailyCalories[formattedDate] = 0;
+            dailyWater[formattedDate] = 0;
+          }
+        } else {
+          final date = _selectedFilter == 'Today' ? today : today.subtract(const Duration(days: 1));
           final formattedDate = DateFormat('MM/dd').format(date);
           dailySteps[formattedDate] = 0;
           dailyCalories[formattedDate] = 0;
           dailyWater[formattedDate] = 0;
         }
 
-        for (var record in controller.healthRecords) {
+        for (var record in filteredRecords) {
           final formattedDate = DateFormat('MM/dd').format(record.date);
           if (dailySteps.containsKey(formattedDate)) {
             dailySteps[formattedDate] = (dailySteps[formattedDate] ?? 0) + record.steps;
@@ -112,12 +146,12 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
-                          // Search Bar with modern styling
-                          _buildSearchBar(context),
+                          // Filter Chips
+                          _buildFilterChips(context),
                           SizedBox(height: 32),
                           // Today's Summary Section
                           Text(
-                            'Today\'s Overview',
+                            '${_selectedFilter}\'s Overview',
                             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                               fontWeight: FontWeight.w700,
                               color: Theme.of(context).colorScheme.onSurface,
@@ -410,37 +444,44 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
     );
   }
 
-  Widget _buildSearchBar(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-            blurRadius: 12,
-            offset: Offset(0, 4),
-          ),
-        ],
-      ),
-      child: TextFormField(
-        decoration: InputDecoration(
-          hintText: 'Search records...',
-          prefixIcon: Icon(Icons.search_rounded,
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.6)),
-          suffixIcon: Icon(Icons.tune_rounded,
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.6)),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide.none,
-          ),
-          filled: true,
-          fillColor: Theme.of(context).colorScheme.surface,
-          contentPadding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 16.0),
-          hintStyle: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+  Widget _buildFilterChips(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: _filterOptions.map((filterName) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: FilterChip(
+              label: Text(filterName),
+              selected: _selectedFilter == filterName,
+              onSelected: (selected) {
+                if (selected) {
+                  setState(() {
+                    _selectedFilter = filterName;
+                  });
+                }
+              },
+              selectedColor: Theme.of(context).colorScheme.primary,
+              checkmarkColor: Theme.of(context).colorScheme.onPrimary,
+              labelStyle: TextStyle(
+                color: _selectedFilter == filterName
+                    ? Theme.of(context).colorScheme.onPrimary
+                    : Theme.of(context).colorScheme.onSurface,
+                fontWeight: FontWeight.w600,
+              ),
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: BorderSide(
+                  color: _selectedFilter == filterName
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.outlineVariant,
+                ),
+              ),
+            ),
+          );
+        }).toList(),
       ),
     );
   }
