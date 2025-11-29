@@ -5,7 +5,7 @@ import '../viewmodels/health_record_controller.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:fl_chart/fl_chart.dart'; // Import fl_chart
+import 'package:fl_chart/fl_chart.dart'; 
 import 'package:health_mate/features/auth/services/auth_service.dart';
 import 'package:health_mate/features/health_records/views/step_history_page.dart';
 import 'package:health_mate/features/health_records/views/calories_history_page.dart';
@@ -86,7 +86,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
         final goalCalories = controller.defaultGoalCalories;
         final goalWater = controller.defaultGoalWater;
 
-        // Prepare data for the charts (e.g., last 7 days of steps, calories, water)
+        // Prepare data for the charts 
         Map<String, int> dailySteps = {};
         Map<String, int> dailyCalories = {};
         Map<String, int> dailyWater = {};

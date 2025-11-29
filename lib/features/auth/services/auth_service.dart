@@ -40,7 +40,7 @@ class AuthService {
   Future<bool> register(String email, String password, String name, String phone, String? profilePictureUrl, DateTime? dateOfBirth) async {
     await Future.delayed(const Duration(seconds: 1));
     if (_users.containsKey(email)) {
-      return false; // User already exists
+      return false; 
     }
     _users[email] = {
       'password': password,
@@ -64,22 +64,16 @@ class AuthService {
 
   Future<bool> sendPasswordResetCode(String email) async {
     await Future.delayed(const Duration(seconds: 1));
-    // In a real app, you would send a code via email.
-    // Here, we just check if the user exists.
     return _users.containsKey(email);
   }
 
   Future<bool> verifyCode(String code) async {
     await Future.delayed(const Duration(seconds: 1));
-    // In a real app, you would verify the code sent to the user.
-    // Here, we just use a mock code.
     return code == '123456';
   }
 
   Future<bool> resetPassword(String newPassword) async {
     await Future.delayed(const Duration(seconds: 1));
-    // In a real app, you would update the user's password.
-    // Here, we just simulate a successful password reset.
     return true;
   }
 }
